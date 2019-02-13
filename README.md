@@ -1,1 +1,1 @@
-https://jakubwis.github.io/18.8-react-gif-search/
+https://jakubwis.github.io/19.5-promise-gif/
