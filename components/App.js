@@ -2,7 +2,7 @@ var GIPHY_API_URL = "https://api.giphy.com";
 var GIPHY_PUB_KEY = "QQzckgwmUW6c75r7INr91g3OHZEsPRwe";
 
 
-function httpGet(searchingText, callback, url) {
+function httpGet(searchingText, url) {
     return new Promise(
         function(resolve, reject) {
             var xhr = new XMLHttpRequest();  // 3.
@@ -14,8 +14,9 @@ function httpGet(searchingText, callback, url) {
                         url: data.fixed_width_downsampled_url,
                         sourceUrl: data.url
                     };
-                    callback(gif);  // 6.
+                    resolve(gif);  // 6.
                 }
+                else reject("error");
             };
             xhr.send();
         });
@@ -45,9 +46,9 @@ App = React.createClass({
 
     getGif: function(searchingText, callback) {  // 1.
         var url = GIPHY_API_URL + '/v1/gifs/random?api_key=' + GIPHY_PUB_KEY + '&tag=' + searchingText;  // 2.
-        httpGet(searchingText, callback, url)
-          .then(response => console.log('Contents: ' + response))
-          .catch(error => console.error('Something went wrong', error));
+        httpGet(searchingText, url)
+          .then(response => callback(response))
+          .catch(error => console.error('Something went wrong', error))
     },
 
     render: function() {
